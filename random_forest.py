@@ -4,14 +4,15 @@ from decision_tree import DecisionTree
 
 
 class RandomForest:
-    def __init__(self, n_estimators=10, max_depth=5, min_samples_split=2, 
-                 criterion="entropy", max_features="sqrt", bootstrap=True):
+    def __init__(self, n_estimators=10, max_depth=5, min_samples_split=2,
+                 criterion="entropy", max_features="sqrt", bootstrap=True, random_state=None):
         self.n_estimators = n_estimators
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
         self.criterion = criterion
         self.max_features = max_features
         self.bootstrap = bootstrap
+        self.random_state = random_state
         self.trees = []
         self.feature_indices = []
 
@@ -33,6 +34,9 @@ class RandomForest:
         return X[indices], y[indices]
 
     def fit(self, X, y):
+        if self.random_state is not None:
+            np.random.seed(self.random_state)
+
         n_samples, n_features = X.shape
         max_features = self._get_max_features(n_features)
 
