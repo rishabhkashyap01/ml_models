@@ -8,9 +8,6 @@ class DecisionTree:
         self.criterion = criterion
         self.tree = None
 
-    # ----------------------------
-    # Impurity Measures
-    # ----------------------------
     def entropy(self, y):
         counts = np.bincount(y)
         probs = counts / len(y)
@@ -27,9 +24,6 @@ class DecisionTree:
         else:
             return self.gini(y)
 
-    # ----------------------------
-    # Information Gain
-    # ----------------------------
     def information_gain(self, X_column, y, threshold):
         parent_impurity = self.impurity(y)
 
@@ -47,9 +41,6 @@ class DecisionTree:
 
         return parent_impurity - child_impurity
 
-    # ----------------------------
-    # Best Split
-    # ----------------------------
     def best_split(self, X, y):
         best_gain = -1
         split_idx, split_thresh = None, None
@@ -70,9 +61,6 @@ class DecisionTree:
 
         return split_idx, split_thresh
 
-    # ----------------------------
-    # Build Tree (Recursion)
-    # ----------------------------
     def build_tree(self, X, y, depth=0):
         num_samples, num_features = X.shape
         num_labels = len(np.unique(y))
@@ -110,15 +98,9 @@ class DecisionTree:
         counter = Counter(y)
         return counter.most_common(1)[0][0]
 
-    # ----------------------------
-    # Fit
-    # ----------------------------
     def fit(self, X, y):
         self.tree = self.build_tree(X, y)
 
-    # ----------------------------
-    # Predict
-    # ----------------------------
     def predict(self, X):
         return np.array([self.traverse_tree(x, self.tree) for x in X])
 
