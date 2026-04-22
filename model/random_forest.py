@@ -1,6 +1,6 @@
 import numpy as np
 from collections import Counter
-from decision_tree import DecisionTree
+from .decision_tree import DecisionTree
 
 
 class RandomForest:
@@ -74,16 +74,17 @@ class RandomForest:
         return np.array([Counter(row).most_common(1)[0][0] for row in predictions])
 
     def predict_proba(self, X):
-        predictions = self.predict(X)
-        unique_classes = np.unique(predictions)
-        probs = np.zeros((X.shape[0], len(unique_classes)))
+        all_preds = np.zeros((X.shape[0], self.n_estimators))
 
         for idx, tree in enumerate(self.trees):
             X_subset = X[:, self.feature_indices[idx]]
-            tree_preds = tree.predict(X_subset)
+            all_preds[:, idx] = tree.predict(X_subset)
 
-        for i, pred in enumerate(predictions):
-            class_counts = Counter(predictions[i])
+        unique_classes = np.unique(all_preds)
+        probs = np.zeros((X.shape[0], len(unique_classes)))
+
+        for i in range(X.shape[0]):
+            class_counts = Counter(all_preds[i])
             for j, cls in enumerate(unique_classes):
                 probs[i, j] = class_counts.get(cls, 0) / self.n_estimators
 

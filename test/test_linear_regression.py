@@ -1,7 +1,9 @@
 import numpy as np
 from sklearn.datasets import load_diabetes, make_regression
 from sklearn.model_selection import train_test_split
-from linear_regression import LinearRegression
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from model.linear_regression import LinearRegression
 
 
 def test_ols():

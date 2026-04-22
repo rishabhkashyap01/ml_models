@@ -1,5 +1,7 @@
 import numpy as np
-from decision_tree import DecisionTree
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from model.decision_tree import DecisionTree
 
 # Sample dataset
 X = np.array([

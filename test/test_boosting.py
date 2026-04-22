@@ -2,8 +2,10 @@ import numpy as np
 from sklearn.datasets import load_iris, load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from gradient_boosting import GradientBoostingClassifier
-from xgboosting import XGBoostClassifier
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from model.gradient_boosting import GradientBoostingClassifier
+from model.xgboosting import XGBoostClassifier
 
 
 # ----------------------------

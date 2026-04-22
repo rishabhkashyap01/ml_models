@@ -2,7 +2,9 @@ import numpy as np
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from random_forest import RandomForest
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+from model.random_forest import RandomForest
 
 
 def test_basic_functionality():

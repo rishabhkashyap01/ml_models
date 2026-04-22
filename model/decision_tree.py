@@ -79,9 +79,9 @@ class DecisionTree:
 
         # stopping conditions
         if (depth >= self.max_depth or
-            num_labels == 1 or
+            num_labels <= 1 or
             num_samples < self.min_samples_split):
-            leaf_value = self.most_common_label(y)
+            leaf_value = self.most_common_label(y) if len(y) > 0 else 0
             return {"leaf": True, "value": leaf_value}
 
         feature, threshold = self.best_split(X, y)
@@ -91,6 +91,9 @@ class DecisionTree:
 
         left_idxs = np.where(X[:, feature] <= threshold)[0]
         right_idxs = np.where(X[:, feature] > threshold)[0]
+
+        if len(left_idxs) == 0 or len(right_idxs) == 0:
+            return {"leaf": True, "value": self.most_common_label(y)}
 
         left_subtree = self.build_tree(X[left_idxs], y[left_idxs], depth + 1)
         right_subtree = self.build_tree(X[right_idxs], y[right_idxs], depth + 1)
